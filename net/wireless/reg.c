@@ -1936,6 +1936,10 @@ static void handle_channel(struct wiphy *wiphy,
 	const struct ieee80211_reg_rule *rrule2 = NULL;
 
 	u32 flags = chan->orig_flags;
+    
+    if(chan->band == NL80211_BAND_S1GHZ) {
+        return;
+    }
 
 	rrule = freq_reg_info(wiphy, orig_chan_freq);
 	if (IS_ERR(rrule)) {

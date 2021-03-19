@@ -138,13 +138,15 @@ ieee80211_s1g_channel_width(const struct ieee80211_channel *chan)
 }
 EXPORT_SYMBOL(ieee80211_s1g_channel_width);
 
-int ieee80211_freq_khz_to_channel(u32 freq)
+int ieee80211_freq_khz_to_channel(u32 freq_khz)
 {
 	/* TODO: just handle MHz for now */
-	freq = KHZ_TO_MHZ(freq);
+	u32 freq = KHZ_TO_MHZ(freq_khz);
 
+	if (freq < 1000)
+		return freq_khz;
 	/* see 802.11 17.3.8.3.2 and Annex J */
-	if (freq == 2484)
+	else if (freq == 2484)
 		return 14;
 	else if (freq < 2484)
 		return (freq - 2407) / 5;
